@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 社团的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    专业的MAPPER.XML
+  --> 
+<mapper namespace="com.neusoft.managerment.associationinfo.mapper.IAssociationMapper">
+ <cache/>
+  <resultMap id="AssociationResultMap" type="AssociationModel">
+     <id property="associationid" column="association_id"/>
+      <result property="associationleader" column="association_leader"/>
+      <result property="associationtime" column="association_time"/>
+      <result property="associationstatus" column="association_status"/>
+       <result property="associationname" column="association_name"/>
+      
+  </resultMap>  
+  <!--增加  -->
+  <insert id="create"  parameterType="AssociationModel" flushCache="true">
+   insert into association (association_id,association_leader,association_time,association_status,association_name)
+   values (#{associationid},#{associationleader},#{associationtime},#{associationstatus},#{associationname})
+  </insert>
+  
+  <!--修改  -->
+  <update id="update" flushCache="true">
+   update association set association_leader=#{associationleader},association_time=#{associationtime},association_status=#{associationstatus},association_name=#{associationname}
+   where association_id=#{associationid}
+  </update>
+  
+  <!--删除  -->
+  <delete id="delete" flushCache="true">
+   delete from association where association_id=#{associationid}
+  </delete>
+  <!--查询  -->
+  <select id="selectListByAll" resultMap="AssociationResultMap">
+   select * from association 
+  </select>
+  
+  <select id="selectListName" resultMap="AssociationResultMap">
+   select * from association_name=#{associationname}
+  </select>
+  <select id="selectname" resultMap="AssociationResultMap">
+  	select distinct association_name from association
+  </select>
+  
+  <!-- 取得所有社团列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="AssociationResultMap">
+   select * from association limit #{start},#{rows}
+  </select>
+
+  <!-- 取得社团的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  <select id="selectcountbyall" resultType="int">
+     select IFNULL(count(association_name),0) FROM association
+  </select>
+  <!--取得指定社团  -->
+  <select id="selectbyname" resultMap="AssociationResultMap">
+     select * from association where association_id=#{associationid}
+  </select>
+  <!-- 根据综合检索条件取得社团列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="AssociationResultMap">
+   	select * from  association
+  <where>
+      <if test="associationname!=null and associationname!=''">
+     and association_name=#{associationname}
+     </if>
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得新闻个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(association_name), 0) from association
+  <where>
+     <if test="associationname!=null and associationname!=''">
+     and association_name=#{associationname}
+     </if>
+      
+     
+  </where>
+  </select>
+
+ </mapper>

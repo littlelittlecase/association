@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 社团审核的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    社团审核的MAPPER.XML
+  --> 
+<mapper namespace="com.neusoft.managerment.associationinfo.mapper.IApplicationMapper">
+ <cache/>
+  <resultMap id="ApplicationResultMap" type="ApplicationModel">
+     <id property="appid" column="app_id"/>
+      <result property="appname" column="app_name"/>
+      <result property="appstatus" column="app_status"/>
+      <result property="reason" column="reason"/>
+  </resultMap>  
+  <!--外键  -->
+  <resultMap id="ApplicationResultMapWithRelation" type="ApplicationModel" extends="ApplicationResultMap">
+	   <association property="student" resultMap="com.neusoft.managerment.studentinfo.mapper.IStudentMapper.StudentResultMap"></association>
+  </resultMap>
+   
+  
+  <!--修改  -->
+  <update id="update" flushCache="true">
+   update application set app_status=#{appstatus},app_name=#{appname},reason=#{reason},student_name=#{student.studentname} where app_id=#{appid}
+  </update>
+  
+  <!--查询  -->
+  <select id="selectListByAll" resultMap="ApplicationResultMapWithRelation">
+   select * from application a inner join student b on a.student_name=b.student_name 
+
+  </select>
+  
+  <select id="selectListName" resultMap="ApplicationResultMapWithRelation">
+   select * from application a inner join student b on a.student_name=b.student_name 
+  where app_name=#{appname}
+  </select>
+  <select id="selectname" resultMap="ApplicationResultMapWithRelation">
+  	select distinct app_name from application
+  </select>
+  
+  <!-- 取得所有社团列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="ApplicationResultMapWithRelation">
+    select * from application a inner join student b on a.student_name=b.student_name  limit #{start},#{rows}
+  </select>
+
+  <!-- 取得社团的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  <select id="selectcountbyall" resultType="int">
+     select IFNULL(count(app_name),0) FROM application
+  </select>
+  <!--取得指定社团  -->
+  <select id="selectbyname" resultMap="ApplicationResultMapWithRelation">
+      select * from application a inner join student b on a.student_name=b.student_name  where app_id =#{appid}
+  </select>
+  <!-- 根据综合检索条件取得社团列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="ApplicationResultMapWithRelation">
+   	 select * from application a inner join student b on a.student_name=b.student_name 
+  <where>
+      <if test="appname!=null and appname!=''">
+     and app_name=#{appname}
+     </if>
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得新闻个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(app_name), 0) from application
+  <where>
+     <if test="appname!=null and appname!=''">
+     and app_name=#{appname}
+     </if>
+      
+     
+  </where>
+  </select>
+
+ </mapper>

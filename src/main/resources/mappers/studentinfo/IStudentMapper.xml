@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 学生的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    专业的MAPPER.XML
+  --> 
+<mapper namespace="com.neusoft.managerment.student.mapper.IStudentMapper">
+ <cache/>
+  <resultMap id="StudentResultMap" type="StudentModel">
+     <id property="studentid" column="student_id"/>
+      <result property="studentname" column="student_name"/>
+      <result property="sex" column="sex"/>
+      <result property="studentphone" column="student_phone"/>
+      
+  </resultMap>
+  <!--外键  -->
+  <resultMap id="StudentResultMapWithRelation" type="StudentModel" extends="StudentResultMap">
+	   <association property="academy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
+	   <association property="majoy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IMajoyMapper.MajoyResultMap"></association>
+  	   <association property="association" resultMap="com.neusoft.managerment.associationinfo.mapper.IAssociationMapper.AssociationResultMap"></association>
+  </resultMap>
+   
+  
+  
+  <!--增加 -->
+  <insert id="create"  parameterType="StudentModel" flushCache="true">
+   insert into student (student_id,student_name,sex,academy_name,majoy_name,student_phone,association_name)
+   values (#{studentid},#{studentname},#{sex},#{academy.academyname},#{majoy.majoyname},#{studentphone},#{association.associationname})
+  </insert> 
+  
+  
+  <!--修改 -->
+  <update id="update" flushCache="true">
+   update student set student_id=#{studentid},student_name=#{studentname},
+   sex=#{sex},academy_name=#{academy.academyname},
+   majoy_name=#{majoy.majoyname},student_phone=#{studentphone},association_name=#{association.associationname}
+   where student_id=#{studentid}
+  </update>
+   
+  <!--删除 -->
+  <delete id="delete" flushCache="true">
+   delete from student where student_id=#{studentid}
+  </delete>
+   
+  <!--查询  -->
+  <select id="selectListByAll" resultMap="StudentResultMapWithRelation">
+   select * from student a inner join academy b on a.academy_name=b.academy_name inner join majoy c on 
+a.majoy_name = c.majoy_name inner join association d on a.association_name = d.association_name 
+  </select>
+  
+  <select id="selectListName" resultMap="StudentResultMapWithRelation">
+   select * from student a inner join academy b on a.academy_name=b.academy_name inner join majoy c on 
+a.majoy_name = c.majoy_name inner join association d on a.association_name = d.association_name  where student_id=#{studentid}
+  </select>
+  <select id="selectname" resultMap="StudentResultMapWithRelation">
+  	select distinct academy_name from student 
+  </select>
+  
+  <!-- 取得所有学生列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="StudentResultMapWithRelation">
+   select * from student a inner join academy b on a.academy_name=b.academy_name inner join majoy c on 
+a.majoy_name = c.majoy_name inner join association d on a.association_name = d.association_name limit #{start},#{rows}
+  </select>
+
+  <!-- 取得学生的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0-->
+  <select id="selectcountbyall" resultType="int">
+  select IFNULL(count(student_name),0) FROM student
+  </select>
+   
+<!--取得指定学生  -->
+<select id="selectbyname" resultMap="StudentResultMapWithRelation">
+select * from student a inner join academy b on a.academy_name=b.academy_name inner join majoy c on 
+a.majoy_name = c.majoy_name inner join association d on a.association_name = d.association_name where student_id=#{studentid}
+</select>
+
+<!-- 根据综合检索条件(学院和学生姓名)取得学生列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="StudentResultMapWithRelation">
+   	select * from student a inner join academy b on a.academy_name=b.academy_name inner join majoy c on 
+        a.majoy_name = c.majoy_name inner join association d on a.association_name = d.association_name
+  <where>
+      <if test="academyname!=null and academyname!=''">
+     and academy_name=#{academy.academyname}
+     </if>
+      <if test="studentname!=null and studentname!=''">
+     and student_name=#{studentname}
+     </if>
+  </where>
+    limit #{start},#{rows}
+  </select>
+  
+  <!-- 根据综合检索条件取得学生个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(student_name), 0) from student
+  <where>
+     <if test="studentname!=null and studentname!=''">
+     and student_name=#{studentname}
+     </if>
+  </where>
+  </select>
+
+  </mapper>

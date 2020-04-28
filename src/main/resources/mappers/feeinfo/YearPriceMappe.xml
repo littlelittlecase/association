@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.managerment.feeinfo.mapper.IYearPriceMapper">
+ <cache/>
+
+ <resultMap type="YearPrice" id="YearPriceResultMap">
+ 	<id property="feeyear" column="FeeYear" />	
+ 	<result property="unitprice" column="Unitprice" />
+ 	<result property="startDate" column="StartDate" />
+ 	<result property="endDate" column="EndDate" />
+ 	<result property="pricedesc" column="PriceDesc" />	
+ </resultMap>
+ 
+ <!-- collection 对多关系 -->
+ <!-- 使用内嵌式ResultMap的关联收费项目的结果映射 -->
+ <resultMap type="YearPrice" id="YearPriceResultMapWithFeeItem" extends="YearPriceResultMap">
+ 	<collection property="item" resultMap="com.neusoft.managerment.feeinfo.mapper.IFeeItemMapper.FeeItemResultMap" />
+ </resultMap>
+ 
+ <!-- 增加年度价格 -->
+ <insert id="create" flushCache="true">
+ 	insert into YearPrice (FeeYear,Unitprice,StartDate,EndDate,PriceDesc) 
+ 	values (#{feeyear},#{unitprice},#{startDate},#{endDate},#{pricedesc})
+ </insert>
+ 
+ <!-- 修改年度价格 -->
+ <update id="update" flushCache="true">
+ 	update YearPrice set Unitprice=#{unitprice},StartDate=#{startDate},
+ 	EndDate=#{endDate},PriceDesc=#{pricedesc} where FeeYear=#{feeyear}
+ </update>
+ 
+ <!-- 删除年度价格 -->
+ <delete id="delete" flushCache="true">
+  	delete from YearPrice where FeeYear=#{feeyear}
+ </delete>
+ 
+ <!-- 取得年度价格表，关联收费项目 -->
+ <select id="selectListByAllWithFeeItem" resultMap="YearPriceResultMapWithFeeItem">
+ 	select a.*,b.*,c.* from YearPrice a left outer join FeeItemYearPrice b on a.FeeYear=b.FeeYear 
+ 	left outer join FeeItem c on b.ItemNo=c.ItemNo 
+ </select>
+ 
+ <!-- 取得指定年度价格的信息 -->
+ <select id="selectByFeeYearWithFeeItem" resultMap="YearPriceResultMapWithFeeItem">
+ 	select  a.*,b.*,c.* from YearPrice a left outer join FeeItemYearPrice b on a.FeeYear=b.FeeYear 
+ 	left outer join FeeItem c on b.ItemNo=c.ItemNo where a.FeeYear=#{feeyear}
+ </select>
+
+  <!-- 为年度价格一次增加多个收费项目 -->
+  <insert id="addFeeItem">
+    insert into FeeItemYearPrice (FeeYear,ItemNo) values 
+    <foreach  item="itemNo" collection="itemno" separator="," >
+          (#{feeyear},#{itemNo})
+    </foreach>
+   </insert>
+   
+   <!-- 删除指定员工的所有收费项目 -->
+   <delete id="deleteFeeItem" >
+   delete from FeeItemYearPrice where FeeYear=#{feeyear}
+   </delete>
+   
+   <!--根据综合检索条件取得年度价格列表  -->
+   <select id="selectListByConditionWithFeeItemWithPage" resultMap="YearPriceResultMapWithFeeItem">
+    select a.* from YearPrice a
+ 	 <where>
+	 	<if test="feeyear!=null and feeyear!=''">
+	 	and a.FeeYear=#{feeyear}
+	 	</if>
+	 	<if test="itemNo!=0">
+	 	and b.FeeYear in (select FeeYear from FeeItemYearPrice where ItemNo=#{itemNo})
+	 	</if>
+	 	<if test="minunitprice!=null and minunitprice!=''">
+	 	and a.Unitprice &gt;=#{minunitprice}
+	 	</if>
+	 	<if test="maxunitprice!=null and maxunitprice!=''">
+	 	and a.Unitprice &lt;=#{maxunitprice}
+	 	</if>
+	 	<if test="startDate!=null">
+	 	and a.StartDate &gt;=#{startDate}
+	 	</if>
+	 	<if test="endDate!=null">
+	 	and a.endDate &lt;=#{endDate}
+	 	</if>
+ 	 </where>
+ 	limit #{start},#{rows}
+   </select>
+   
+   <!-- 根据综合检索条件取得年度价格个数 -->
+   <select id="selectCountByCondition" resultType="int">
+    select IFNULL(count(FeeYear),0) from YearPrice
+     <where>
+	 	<if test="feeyear!=null and feeyear!=''">
+	 	and FeeYear=#{feeyear}
+	 	</if>
+	 	<if test="itemNo!=0">
+	 	and FeeYear in (select FeeYear from FeeItemYearPrice where ItemNo=#{itemNo})
+	 	</if>
+	 	<if test="minunitprice!=null and minunitprice!=''">
+	 	and Unitprice &gt;=#{minunitprice}
+	 	</if>
+	 	<if test="maxunitprice!=null and maxunitprice!=''">
+	 	and Unitprice &lt;=#{maxunitprice}
+	 	</if>
+	 	<if test="startDate!=null">
+	 	and StartDate &gt;=#{startDate}
+	 	</if>
+	 	<if test="endDate!=null">
+	 	and endDate &lt;=#{endDate}
+	 	</if>
+ 	 </where>
+   </select>
+</mapper>

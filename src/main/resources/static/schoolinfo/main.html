@@ -1,0 +1,47 @@
+<script type="text/javascript" src="schoolinfo/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+            <div class="col-md-9">
+	             <form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label  for="name">学院名称</label>
+				    <select id="AcademySelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+				   <a href="#" class="btn btn-default" id="AcademySearchButton">检索</a>
+				  </div>
+				</form>
+             </div>
+             <div class="col-md-6"><h3 class="box-title">学院管理</h3></div>
+             <div class="col-md-6 text-right">
+             	<a href="#" id="AcademyModifyLink" class="btn btn-info">修改</a> 
+            	<a href="#" id="AcademyDeleteLink"class="btn btn-info">删除</a>
+             	<a href="#" class="btn btn-info">详细</a>
+              </div>
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="academycontent">
+       <table id="AcademyTable" class="table table-bordered table-hover"></table>
+    <div class="row" id="Academypager" ></div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+     <a href="#" id="AcademyAddLink" class="btn btn-info">增加</a>
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<!--弹出窗口  -->
+<div id="AcademyDailogArea">
+
+</div>

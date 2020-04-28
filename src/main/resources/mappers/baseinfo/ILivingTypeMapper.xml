@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.managerment.baseinfo.mapper.ILivingTypeMapper">
+
+  <cache/>
+  
+  <resultMap id="LivingTypeResultMap" type="livingtype">
+  	<id property="typeno" column="TypeNo" />
+  	<result property="typename" column="TypeName" />
+  </resultMap>
+  
+  <insert id="create" keyProperty="typeno" keyColumn="TypeNo" useGeneratedKeys="true" flushCache="true">
+  	insert into LivingType (TypeName) values (#{typename})
+  </insert>
+  
+  <update id="update" flushCache="true">
+  	update LivingType set TypeNameE=#{typename} where TypeNo=#{typeno} 
+  </update>
+  
+  <delete id="delete" flushCache="true">
+  	delete from LivingType where TypeNo=#{typeno} 
+  </delete>
+  
+  <!-- 取得所居住类型 -->
+  <select id="selectListByAll" resultMap="LivingTypeResultMap" >
+  	select * from LivingType 
+  </select>
+  
+   <!-- 取得指定居住类型的信息 -->
+  <select id="selectListByTypeNo" resultMap="LivingTypeResultMap" >
+  	select * from LivingType where TypeNo=#{typeno} 
+  </select>
+  
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 新闻的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    社团官方新闻的MAPPER.XML
+  -->
+<mapper namespace="com.neusoft.managerment.office.mapper.INewsMapper">
+ <cache/>
+  <resultMap id="NewsResultMap" type="NewsModel">
+     <id property="newsno" column="NEWSNO"/>
+      <result property="newstype" column="NEWSTYPE"/>
+      <result property="newstime" column="NEWSTIME"/>
+      <result property="newscontent" column="NEWSCONTENT"/> 
+  </resultMap>
+  
+  <insert id="create"  parameterType="NewsModel" flushCache="true">
+   insert into officenews (NEWSNO,NEWSTYPE,NEWSTIME,NEWSCONTENT)
+   values (#{newsno},#{newstype},#{newstime},#{newscontent})
+  
+  </insert>
+  
+  <update id="update" flushCache="true">
+   update officenews set NEWSTIME=#{newstime},NEWSTYPE=#{newstype},NEWSCONTENT=#{newscontent}
+   where NEWSNO=#{newsno}
+  </update>
+  
+  <delete id="delete" flushCache="true">
+   delete from OFFICENEWS where  NEWSNO=#{newsno}
+  </delete>
+  
+  <select id="selectListByAll" resultMap="NewsResultMap">
+   select * from officenews
+  
+  </select>
+  <select id="selectListType" resultMap="NewsResultMap">
+   select * from officenews where NEWSTYPE=#{newstype}
+  </select>
+  <select id="selecttype" resultMap="NewsResultMap">
+  	select distinct newstype from officenews 
+  </select>
+  
+  <!-- 取得所有新闻列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="NewsResultMap">
+   select * from officenews limit #{start},#{rows}
+  </select>
+
+  <!-- 取得新闻的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  <select id="selectcountbyall" resultType="int">
+  select IFNULL(count(NEWSNO),0) FROM OFFICENEWS
+  </select>
+<!--取得指定新闻  -->
+
+<select id="selectbyno" resultMap="NewsResultMap">
+select * from officenews where NEWSNO=#{newsno}
+</select>
+  
+
+<!-- 根据综合检索条件取得新闻列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="NewsResultMap">
+   	select * from officenews
+  <where>
+      <if test="newstype!=null and newstype!=''">
+     and NEWSTYPE=#{newstype}
+     </if>
+      <if test="startDate!=null">
+     and NEWSTIME &gt;=#{startDate}
+     </if>
+      <if test="endDate!=null">
+     and NEWSTIME &lt;=#{endDate}
+     </if>
+     
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得新闻个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(NEWSNO), 0) from officenews
+  <where>
+     <if test="newstype!=null and newstype!=''">
+     and NEWSTYPE=#{newstype}
+     </if>
+      <if test="startDate!=null">
+     and NEWSTIME &gt;=#{startDate}
+     </if>
+      <if test="endDate!=null">
+     and NEWSTIME &lt;=#{endDate}
+     </if>
+     
+  </where>
+  </select>
+
+  </mapper>

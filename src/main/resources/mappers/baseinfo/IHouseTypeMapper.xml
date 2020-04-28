@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.managerment.baseinfo.mapper.IHouseTypeMapper">
+
+  <cache/>
+
+  <resultMap id="HouseTypeResultMap" type="housetype">
+    <id property="typeno" column="TypeNo"/>
+    <result property="typename" column="TypeName"/>
+  </resultMap>
+
+  <insert id="create"  keyProperty="typeno"   keyColumn="TypeNo" useGeneratedKeys="true"  flushCache="true">
+   insert into HouseType (TypeNo,TypeName) values (#{typeno},#{typename})
+  </insert>
+  
+  <update id="update" flushCache="true">
+   update HouseType set TypeName=#{typename} where TypeNo=#{typeno}
+  </update>
+  
+  <delete id="delete" flushCache="true">
+   delete from HouseType where TypeNo=#{typeno}
+  </delete>
+  
+  <select id="selectListByAll" resultMap="HouseTypeResultMap">
+   select * from HouseType
+  </select>
+  
+  <select id="selectListByAllWithPage" resultMap="HouseTypeResultMap">
+   select * from HouseType limit #{start},#{rows}
+  </select>
+  
+  <select id="selectByTypeNo" resultMap="HouseTypeResultMap" >
+  select * from HouseType  where TypeNo=#{typeno}
+  </select>
+  
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

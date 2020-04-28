@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 学院的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    学院的MAPPER.XML
+  --> 
+<mapper namespace="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper">
+ <cache/>
+  <resultMap id="AcademyResultMap" type="AcademyModel">
+     <id property="academyid" column="academy_id"/>
+      <result property="academyname" column="academy_name"/>
+      <result property="academycount" column="academy_count"/>
+  </resultMap>
+  
+  <!--增加  -->
+  <insert id="create"  parameterType="AcademyModel" flushCache="true">
+   insert into academy (academy_id,academy_name,academy_count)
+   values (#{academyid},#{academyname},#{academycount})
+  </insert>
+  
+  <!--修改  -->
+  <update id="update" flushCache="true">
+   update academy set academy_id=#{academyid},academy_name=#{academyname},academy_count=#{academycount}
+   where academy_id=#{academyid}
+  </update>
+  
+  <!--删除  -->
+  <delete id="delete" flushCache="true">
+   delete from academy where  academy_id=#{academyid}
+  </delete>
+  
+  <!--查询  -->
+  <select id="selectListByAll" resultMap="AcademyResultMap">
+   select * from academy
+  </select>
+  
+  <select id="selectListName" resultMap="AcademyResultMap">
+   select * from academy where academy_name=#{academyname}
+  </select>
+  <select id="selectname" resultMap="AcademyResultMap">
+  	select distinct academy_name from academy 
+  </select>
+  
+  <!-- 取得所有学院列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="AcademyResultMap">
+   select * from academy limit #{start},#{rows}
+  </select>
+
+  <!-- 取得学院的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  <select id="selectcountbyall" resultType="int">
+  select IFNULL(count(academy_name),0) FROM academy
+  </select>
+<!--取得指定学院  -->
+<select id="selectbyname" resultMap="AcademyResultMap">
+select * from academy where academy_id=#{academyid}
+</select>
+<!-- 根据综合检索条件取得学院列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="AcademyResultMap">
+   	select * from academy
+  <where>
+      <if test="academyname!=null and academyname!=''">
+     and academy_name=#{academyname}
+     </if>
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得新闻个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(academy_name), 0) from academy
+  <where>
+     <if test="academyname!=null and academyname!=''">
+     and academy_name=#{academyname}
+     </if>
+      
+     
+  </where>
+  </select>
+
+  </mapper>

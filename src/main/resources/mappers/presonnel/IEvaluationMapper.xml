@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.managerment.personnel.mapper.IEvaluationMapper">
+
+  <cache/>
+<!-- /**
+ *    author : 丘嘉茹
+ *    version: 1.0
+ *    人事管理信息模块的员工考评档案管理信息Model
+ */ -->
+  <resultMap id="EvaluationResultMap" type="Evaluation">
+    <id property="no" column="EVALUATIONNO"/>
+    <result property="grade" column="GRADE"/>
+    <result property="award" column="AWARD"/>
+  </resultMap>
+
+
+	 <!-- 关联的部门的ResultMap -->
+  <resultMap  id="EvaluationWithEmpResultMap" type="Evaluation" extends="EvaluationResultMap">
+  	<association property="evaluation" resultMap="com.neusoft.managerment.personnel.mapper.IEmployeesMapper.EmployeesResultMap"></association>
+  </resultMap>
+<!--   增加员工 -->
+  <insert id="create"  keyProperty="id"   keyColumn="EMPID" useGeneratedKeys="true"  flushCache="true">
+   insert into evaluation (EMPID,EMPNAME,SEX,GRADE,AWARD)
+   values (#{employees.empid},#{employees.empname},#{employees.sex},
+   #{grade},#{award})
+  </insert>
+<!--   修改指定员工信息 -->
+  <update id="update" flushCache="true">
+   update evaluation set EMPID=#{employees.empid},EMPNAME=#{employees.empname},SEX=#{employees.sex},GRADE=#{grade},AWARD=#{award} where EVALUATIONNO=#{no}
+  </update>
+<!--   删除指定员工 -->
+  <delete id="delete" flushCache="true">
+   delete from evaluation where EVALUATIONNO=#{no}
+  </delete>
+<!--   取得所有的员工信息 -->
+  <select id="selectListByAll" resultMap="EvaluationWithEmpResultMap">
+   select a.*,b.* from evaluation a inner join employees b on a.empid=b.empid
+  </select>
+ 
+   <!-- 根据综合检索条件取得员工列表，取得关联的部门,分页模式 -->
+  <select id="selectListByConditionWithDepartments" resultMap="EvaluationWithEmpResultMap">
+  select a.*,b.* from evaluation a inner join employees b on a.empid=b.empid
+  <where>
+     <if test="idd!=0">
+      and a.EMPID=#{idd}
+     </if>
+     <if test="sex!=null and sex!=''">
+     and a.SEX=#{sex}
+     </if>
+     <if test="grade!=null and grade!=''">
+     and a.GRADE=#{grade}
+     </if>
+  </where>
+    limit #{start},#{rows}
+  </select>
+  
+  <!-- 返回指定的员工信息 -->
+  <select id="selectEvaByNO" resultMap="EvaluationWithEmpResultMap" >
+  select a.*,b.* from evaluation a inner join employees b on a.empid=b.empid where EVALUATIONNO=#{no}
+  </select>
+  
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(EMPID), 0) from evaluation
+    <where>
+     <if test="idd!=0">
+      and a.EMPID=#{idd}
+     </if>
+     <if test="sex!=null and sex!=''">
+     and a.SEX=#{sex}
+     </if>
+     <if test="grade!=null and grade!=''">
+     and a.GRADE=#{grade}
+     </if>
+  </where>
+  </select>
+  
+</mapper>

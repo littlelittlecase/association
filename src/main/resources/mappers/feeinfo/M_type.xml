@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 维护维修的Mapper接口Mapping映射 --> 
+
+<!--
+    author : 张梓琪
+    version: 1.0
+    物业日常业务管理模块的维修报修的MAPPER.XML
+  -->
+<mapper namespace="com.neusoft.managerment.feeinfo.mapper.IM_typeMapper">
+  
+  <cache/>
+  <resultMap id="M_typeResultMap" type="mtype">
+     <id property="mtypeno" column="MTypeNo"/>
+     <result property="mtypename" column="MTypeNo"/>
+   </resultMap>
+   <insert id="create"  parameterType="mtype" flushCache="true">
+   insert into m_type (MTypeNo,MtypeName)
+   values (#{mtypeno},#{mtypename})
+   </insert>
+  
+  </mapper>

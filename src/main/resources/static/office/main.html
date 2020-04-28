@@ -1,0 +1,52 @@
+<script type="text/javascript" src="office/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+            <div class="col-md-9">
+	             <form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label  for="name">类型</label>
+				    <select id="NewsSelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+				    <label  for="name">新闻日期</label>
+				    从<input type="date" class="form-control" id="startDate" size="10" />
+				    至<input type="date" class="form-control" id="endDate" size="10" />
+				  </div>
+				  <div class="form-group">
+				   <a href="#" class="btn btn-default" id="NewsSearchButton">检索</a>
+				  </div>
+				</form>
+             </div>
+             <div class="col-md-6"><h3 class="box-title">新闻管理</h3></div>
+             <div class="col-md-6 text-right">
+             	<a href="#" id="NewsModifyLink" class="btn btn-info">修改</a> 
+            	<a href="#" id="NewsDeleteLink"class="btn btn-info">删除</a>
+             	<a href="#" class="btn btn-info">详细</a>
+              </div>
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="newscontent">
+       <table id="NewsTable" class="table table-bordered table-hover"></table>
+    <div class="row" id="Newspager" ></div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+     <a href="#" id="NewsAddLink" class="btn btn-info">增加</a>
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<!--弹出窗口  -->
+<div id="NewsDailogArea">
+
+</div>

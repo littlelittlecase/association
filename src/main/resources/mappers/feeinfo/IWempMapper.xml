@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 维护维修的Mapper接口Mapping映射 --> 
+
+<!--
+    author : 张梓琪
+    version: 1.0
+    物业日常业务管理模块的维修报修的MAPPER.XML
+  -->
+<mapper namespace="com.neusoft.managerment.feeinfo.mapper.IWempMapper">
+  
+  <cache/>
+  <resultMap id="WempResultMap" type="wemp">
+     <id property="wempid" column="WEMPID"/>
+     <result property="wempname" column="WEMPNAME"/>
+     <result property="sex" column="SEX"/>
+     
+   </resultMap>
+   <insert id="create"  parameterType="wemp" flushCache="true">
+   insert into WEMP (WEMPID,WEMPNAME,SEX)
+   values (#{wempid},#{wempname},#{sex})
+   </insert>
+   
+   <delete id="delete" flushCache="true">
+     delete from WEMP where WEMPID=#{wempid} 
+     </delete>
+     
+    <update id="update" flushCache="true">
+  	update WEMP set WEMPNAME=#{wempname},SEX=#{sex} where WEMPID=#{wempid} 
+    </update>
+  </mapper>

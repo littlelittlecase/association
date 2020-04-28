@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 维护单位的Mapper接口Mapping映射 --> 
+
+<!--
+    author : 张梓琪
+    version: 1.0
+    系统基础信息模块的维修单位维修报修的MAPPER.XML
+  -->
+<mapper namespace="com.neusoft.managerment.baseinfo.mapper.IMaintainProviderMapper">
+  
+  <cache/>
+  <resultMap id="MaintainproviderResultMap" type="MaintainProvider">
+     <id property="providerno" column="ProviderNo"/>
+     <result property="pname" column="PName"/>
+     <result property="pcontact" column="PContact"/>
+     <result property="paddress" column="PAddress"/>
+     <result property="pmobile" column="PMobile"/>
+     <result property="tel" column="PTel"/>
+     
+   </resultMap>
+   <insert id="create"  parameterType="MaintainProvider" flushCache="true">
+	   insert into MaintainProvider (PName,PContact,PAddress,PMobile,PTel)
+	   values (#{pname},#{pcontact},#{paddress},#{pmobile},#{tel})
+   </insert>
+  <delete id="delete" flushCache="true">
+  		delete from MaintainProvider where ProviderNo=#{providerno} 
+  </delete>
+  <update id="update" flushCache="true">
+  		update MaintainProvider set PName=#{pname},PContact=#{pcontact},PAddress=#{paddress},PMobile=#{pmobile},PTel=#{tel} where ProviderNo=#{providerno}
+  </update>
+ 
+ <select id="selectall" resultMap="MaintainproviderResultMap">
+ 	select * from MaintainProvider
+ </select>
+  <!-- 根据综合检索条件取得维修单位列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="MaintainproviderResultMap">
+   	select * from maintainprovider
+  <where>
+      <if test="PName!=null and PName!=''">
+     and PName=#{pname}
+     </if>
+      <if test="PAddress!=null and PAddress!=''">
+     and PAddress=#{paddress}
+     </if>
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得维修单位个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(ProviderNo), 0) from maintainprovider
+  <where>
+     <if test="PName!=null and PName!=''">
+     and PName=#{pname}
+     </if>
+      <if test="PAddress!=null and PAddress!=''">
+     and PAddress=#{paddress}
+     </if>
+  </where>
+  </select>
+  </mapper>

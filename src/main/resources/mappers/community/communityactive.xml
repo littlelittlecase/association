@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 社区的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    系统基础信息的社区活动的MAPPER.XML
+  -->
+<mapper namespace="com.neusoft.managerment.communityinfo.mapper.ICommunityMapper">
+  
+  <cache/>
+  <resultMap id="ActResultMap" type="Active">
+     <id property="activeno" column="ACTIVENO"/>
+      <result property="activeplace" column="ACTIVEPLACE"/>
+      <result property="activetime" column="ACTIVETIME"/>
+      <result property="activecontent" column="ACTIVECONTENT"/> 
+      <result property="activetype" column="ACTIVETYPE"/> 
+  </resultMap>
+  
+  <insert id="create"  parameterType="Active" flushCache="true">
+   insert into community (ACTIVEPLACE,ACTIVETIME,ACTIVECONTENT,ACTIVETYPE)
+   values (#{activeplace},#{activetime},#{activecontent},#{activetype})
+  
+  </insert>
+  
+  <!-- <update id="update" flushCache="true">
+   update community set ACTIVEPLACE=#{activeplace},ACTIVETIME=#{activetime},ACTIVECONTENT=#{activecontent}
+   where ACTIVENO=#{activeno}
+  </update> -->
+  <!--查询指社团定活动  -->
+  <delete id="delete" flushCache="true">
+  delete from community where  ACTIVENO=#{activeno}
+  </delete>
+  <!--查询所有社团活动  -->
+  <select id="selectListByAll" resultMap="ActResultMap">
+   select * from community
+  
+  </select>
+  <!--根据编号取得指定的社团活动  -->
+  <select id="selectbyno" resultMap="ActResultMap">
+   select * from community where ACTIVENO=#{activeno}
+  
+  </select>
+  <!--查询指定地点的活动  -->
+  <select id="selectListByPlace" resultMap="ActResultMap">
+    select * from community where ACTIVEPLACE=#{activeplace}
+  </select>
+  <!--查询指定时间的活动  
+  <select id="selectListByTime" resultMap="ActResultMap">
+    select * from community where ACTIVETIME=#{activetime}
+  </select>-->
+  <update id="update" flushCache="true">
+   update community set ACTIVETIME=#{activetime},ACTIVEPLACE=#{activeplace},ACTIVECONTENT=#{activecontent},ACTIVETYPE=#{activetype} where ACTIVENO=#{activeno}
+  </update>
+  
+   <!-- 根据综合检索条件取得社团活动个数-->
+  <select id="selectCountByConditionWithpage" resultType="int">
+  select IFNULL(count(ACTIVENO), 0) from community 
+  <where>
+     <if test="activeplace!=null and activeplace!=''">
+      and ACTIVEPLACE=#{activeplace}
+     </if>
+     <if test="activecontent!=null and activecontent!=''">
+     and ACTIVECONTENT=#{activecontent}
+     </if>
+     <if test="activetype!=null and activetype!=''">
+     and ACTIVETYPE=#{activetype}
+     </if>
+     <if test="startActiveDate!=null">
+     and ACTIVETIME  &gt;=#{startActiveDate}
+     </if>
+     <if test="endActiveDate!=null">
+     and ACTIVETIME &lt;=#{endActiveDate}
+     </if>
+  </where>
+   
+  </select>
+  
+
+  
+  <!-- 根据综合检索条件取得社团活动列表，分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="ActResultMap">
+  select * from community
+  <where>
+    <if test="activeplace!=null and activeplace!=''">
+      and ACTIVEPLACE=#{activeplace}
+     </if>
+     <if test="activecontent!=null and activecontent!=''">
+     and ACTIVECONTENT=#{activecontent}
+     </if>
+     <if test="activetype!=null and activetype!=''">
+     and ACTIVETYPE=#{activetype}
+     </if>
+     <if test="startActiveDate!=null">
+     and ACTIVETIME  &gt;=#{startActiveDate}
+     </if>
+     <if test="endActiveDate!=null">
+     and ACTIVETIME &lt;=#{endActiveDate}
+     </if>
+  </where>
+    limit #{start},#{rows}
+  </select>
+  <!--活动类型列表  -->
+  <select id="selecttype" resultMap="ActResultMap">
+  	select distinct activetype from community 
+  </select>
+  <!--活动地点列表  -->
+  <select id="selectplace" resultMap="ActResultMap">
+  	select distinct activeplace from community
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  </mapper>

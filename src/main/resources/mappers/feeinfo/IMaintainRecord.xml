@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 维修报修的Mapper接口Mapping映射 --> 
+
+<!-- author : 张梓琪 version: 1.0 物业日常业务管理模块的维修报修的MAPPER.XML -->
+<mapper
+	namespace="com.neusoft.managerment.feeinfo.mapper.IMaintainRecordMapper">
+
+	<cache />
+	<resultMap id="MaintainrecordResultMap" type="MaintainRecord">
+		<id property="recordno" column="RECORDNO" />
+		<!-- <result property="mtypyno" column="MTYPENO" /> -->
+		<!-- <result property="roomno" column="ROOMNO" /> -->
+		<result property="contactname" column="CONTACTNAME" />
+		<result property="mobile" column="MOBILE" />
+		<result property="tel" column="TEL" />
+		<result property="mdate" column="MDATE" />
+		<result property="mdesc" column="MDESC" />
+		<!-- <result property="wempid" column="WEMPID" /> -->
+		<result property="wdate" column="WDATE" />
+		<result property="wtask" column="WTASK" />
+		<result property="wresult" column="WRESULT" />
+		<result property="wstatus" column="WSTATUS" />
+		<result property="wfee" column="WFEE" />
+		<!-- <result property="providerno" column="PROVIDERNO" /> -->
+		<result property="clientfeeback" column="CLIENTFEEBACK" />
+	</resultMap>
+	<!--關聯外鍵  -->
+	<resultMap id="MaintainrecordResultMapWithRelation" type="MaintainRecord" extends="MaintainrecordResultMap">
+	   <association property="mtype" resultMap="com.neusoft.managerment.feeinfo.mapper.IM_typeMapper.M_typeResultMap"></association>
+	   <association property="room" resultMap="com.neusoft.managerment.baseinfo.mapper.IRoomMapper.RoomResultMap"></association>
+	   <association property="wemp" resultMap="com.neusoft.managerment.feeinfo.mapper.IWempMapper.WempResultMap"></association>
+	   <association property="provider" resultMap="com.neusoft.managerment.baseinfo.mapper.IMaintainProviderMapper.MaintainproviderResultMap"></association>
+	</resultMap>
+	
+	<resultMap id="MaintainrecordResultMapWithRelationWithMtype" type="MaintainRecord" extends="MaintainrecordResultMap">
+	   <association property="mtype" resultMap="com.neusoft.managerment.feeinfo.mapper.IM_typeMapper.M_typeResultMap"></association>
+	</resultMap>
+	<resultMap id="MaintainrecordResultMapWithRelationWithRoom" type="MaintainRecord" extends="MaintainrecordResultMap">
+	   <association property="room" resultMap="com.neusoft.managerment.baseinfo.mapper.IRoomMapper.RoomResultMap"></association>
+	</resultMap>
+	<resultMap id="MaintainrecordResultMapWithRelationWithWemp" type="MaintainRecord" extends="MaintainrecordResultMap">
+	   <association property="wemp" resultMap="com.neusoft.managerment.feeinfo.mapper.IWempMapper.WempResultMap"></association>
+	</resultMap>
+	<resultMap id="MaintainrecordResultMapWithRelationWithProvider" type="MaintainRecord" extends="MaintainrecordResultMap">
+	   <association property="provider" resultMap="com.neusoft.managerment.baseinfo.mapper.IMaintainProviderMapper.MaintainproviderResultMap"></association>
+	</resultMap>
+	
+
+	 <insert id="insert" keyProperty="recordno"   keyColumn="RECORDNO" useGeneratedKeys="true" flushCache="true">
+		insert into maintainrecord (MTYPENO,ROOMNO,CONTACTNAME,MOBILE,TEL,MDATE,MDESC,WEMPID,WDATE,WTASK,WRESULT,WSTATUS,WFEE,PROVIDERNO,CLIENTFEEBACK)
+		values (#{mtype.mtypeno},#{room.roomno},#{contactname},#{mobile},#{tel},#{mdate},
+		                 #{mdesc},#{wemp.wempid},#{wdate},#{wtask},#{wresult},#{wstatus},#{wfee},#{provider.providerno},#{clientfeeback})
+
+	</insert>
+
+	<update id="update" flushCache="true">
+		update  maintainrecord set MTYPENO=#{mtype.mtypeno},CONTACTNAME=#{contactname},ROOMNO=#{room.roomno},MOBILE=#{mobile},TEL=#{tel},MDATE=#{mdate},MDESC=#{mdesc},
+   				WEMPID=#{wemp.wempid},WDATE=#{wdate},WTASK=#{wtask},WRESULT=#{wresult},WSTATUS=#{wstatus},WFEE=#{wfee},
+   				PROVIDERNO=#{provider.providerno},CLIENTFEEBACK=#{clientfeeback}
+		where RECORDNO=#{recordno}
+	</update>
+
+
+	<delete id="delete" flushCache="true">
+		delete from maintainrecord where RECORDNO=#{recordno}
+	</delete>
+	<!-- 查询所有维修表单 -->
+	<select id="selectListByAll" resultMap="MaintainrecordResultMapWithRelation">
+		select * from maintainrecord a inner join m_type b on a.mtypeno=b.mtypeno inner join room c on a.roomno=c.roomno inner join wemp d on a.wempid=d.wempid inner join maintainprovider e on a.providerno=e.providerno
+	</select>
+	<!-- 取得指定的维修保单 -->
+	<select id="selectByNo" resultMap="MaintainrecordResultMapWithRelation">
+		select * from maintainrecord a inner join m_type b on a.mtypeno=b.mtypeno inner join room c on a.roomno=c.roomno inner join wemp d on a.wempid=d.wempid inner join maintainprovider e on a.providerno=e.providerno
+		where RECORDNO=#{recordno}
+	</select>
+	<!--分页查询维修表单  -->
+	<select id="selectListByAllWithPage" resultMap="MaintainrecordResultMapWithRelation">
+		select * from maintainrecord a inner join m_type b on a.mtypeno=b.mtypeno inner join room c on a.roomno=c.roomno inner join wemp d on a.wempid=d.wempid inner join maintainprovider e on a.providerno=e.providerno
+		limit #{start},#{rows}
+	</select>
+	<!-- 取得新闻的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  	<select id="selectcountbyall" resultType="int">
+  		select IFNULL(count(recordno),0) FROM maintainrecord
+  	</select>
+	
+	<!--根据综合检索条件取得表单个数  -->
+	 <select id="selectCountByCondition" resultType="int">
+   		select IFNULL(count(RECORDNO), 0) from maintainrecord
+			 <where>
+		     <if test="mtypeno!=0">
+		     and MTypeNo=#{mtypeno}
+		     </if>
+		     <if test="roomno!=0">
+		     and RoomNo=#{roomno}
+		     </if>
+		     <if test="startDate!=null ">
+		     	and MDate &gt;=#{startDate}
+		     </if>
+		     <if test="endDate!=null">
+		     	and MDate &lt;=#{endDate}
+		     </if>
+		     <if test="wstatus!=null and wstatus!=''">
+		     and WStatus=#{wstatus}
+		     </if>
+		     <if test="providerno!=0">
+		     and ProviderNo=#{providerno}
+		     </if>
+		     
+		  	</where>
+  	</select>
+  	<!--根据综合检索条件取得表单列表关联表，分页模式  -->
+  	<select id="selectListByConditionWithPage" resultMap="MaintainrecordResultMapWithRelation">
+		select * from maintainrecord a inner join m_type b on a.mtypeno=b.mtypeno inner join room c on a.roomno=c.roomno inner join wemp d on a.wempid=d.wempid inner join maintainprovider e on a.providerno=e.providerno
+			<where>
+		     <if test="mtypeno!=0">
+		     and a.MTypeNo=#{mtypeno}
+		     </if>
+		     <if test="roomno!=0">
+		     and a.RoomNo=#{roomno}
+		     </if>
+		     <if test="startDate!=null">
+		     	and a.MDate &gt;=#{startDate}
+		     </if>
+		     <if test="endDate!=null">
+		     	and a.MDate &lt;=#{endDate}
+		     </if>
+		     <if test="wstatus!=null and wstatus!=''">
+		     and a.WStatus=#{wstatus}
+		     </if>
+		     <if test="providerno!=0">
+		     and a.ProviderNo=#{providerno}
+		     </if>
+		  	</where>
+		limit #{start},#{rows}
+	</select>
+   <!--外键表  -->
+     <!--选择维修类型  -->
+     <select id="selecttype" resultType="mtype">
+     	select mtypeno,mtypename from m_type
+     </select>
+    <!-- 选择维修工人id   -->
+     <select id="selectwemp" resultType="wemp">
+        select wempid,wempname from wemp  
+     </select>
+     <!--选择房间号  -->
+     <select id="selectroom" resultType="room">
+        select roomno from room  
+     </select>
+     <!--选择维修公司  -->
+     <select id="selectprovider" resultType="MaintainProvider">
+     	select providerno,pname from maintainprovider
+     </select>
+     
+	
+</mapper>

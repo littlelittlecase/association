@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 专业的Mapper接口Mapping映射 --> 
+
+<!--
+    version: 1.0
+    专业的MAPPER.XML
+  --> 
+<mapper namespace="com.neusoft.managerment.schoolinfo.mapper.IMajoyMapper">
+ <cache/>
+  <resultMap id="MajoyResultMap" type="MajoyModel">
+     <id property="majoyid" column="majoy_id"/>
+      <result property="majoyname" column="majoy_name"/>
+  </resultMap>
+  <!--外键  -->
+  <resultMap id="MajoyResultMapWithRelation" type="MajoyModel" extends="MajoyResultMap">
+	   <association property="academy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
+  </resultMap>
+   
+  
+  
+  <!--增加  -->
+  <insert id="create"  parameterType="MajoyModel" flushCache="true">
+   insert into majoy (academy_id,majoy_id,majoy_name)
+   values (#{academy.academyid},#{majoyid},#{majoyname})
+  </insert>
+  
+  <!--修改  -->
+  <update id="update" flushCache="true">
+   update majoy set majoy_name=#{majoyname},majoy_id=#{majoyid},academy_id=#{academy.academyid}
+   where majoy_id=#{majoyid}
+  </update>
+  
+  <!--删除  -->
+  <delete id="delete" flushCache="true">
+   delete from majoy where majoy_id=#{majoyid}
+  </delete>
+  
+  <!--查询  -->
+  <select id="selectListByAll" resultMap="MajoyResultMapWithRelation">
+   select * from majoy a inner join academy b on a.academy_id=b.academy_id 
+  </select>
+  
+  <select id="selectListName" resultMap="MajoyResultMapWithRelation">
+   select * from majoy a inner join academy b on a.academy_id=b.academy_id  where majoy_name=#{majoyname}
+  </select>
+  <select id="selectname" resultMap="MajoyResultMapWithRelation">
+  	select distinct majoy_name from majoy 
+  </select>
+  
+  <!-- 取得所有学院列表,分页模式 -->
+  <select id="selectListByAllWithPage" resultMap="MajoyResultMapWithRelation">
+   select * from majoy a inner join academy b on a.academy_id=b.academy_id  limit #{start},#{rows}
+  </select>
+
+  <!-- 取得学院的个数，使用IFNULL函数判断count函数结果是否为null, 为null返回0 -->
+  <select id="selectcountbyall" resultType="int">
+  select IFNULL(count(majoy_name),0) FROM majoy
+  </select>
+<!--取得指定学院  -->
+<select id="selectbyname" resultMap="MajoyResultMapWithRelation">
+select * from majoy a inner join academy b on a.academy_id=b.academy_id where majoy_id=#{majoyid}
+</select>
+<!-- 根据综合检索条件取得学院列表,分页模式 -->
+  <select id="selectListByConditionWithPage" resultMap="MajoyResultMapWithRelation">
+   	select * from majoy a inner join academy b on a.academy_id=b.academy_id 
+  <where>
+      <if test="majoyname!=null and majoyname!=''">
+     and majoy_name=#{majoyname}
+     </if>
+  </where>
+    limit #{start},#{rows}
+ 
+  </select>
+  
+  <!-- 根据综合检索条件取得新闻个数-->
+  <select id="selectCountByCondition" resultType="int">
+   select IFNULL(count(majoy_name), 0) from majoy
+  <where>
+     <if test="majoyname!=null and majoyname!=''">
+     and majoy_name=#{majoyname}
+     </if>
+      
+     
+  </where>
+  </select>
+
+  </mapper>

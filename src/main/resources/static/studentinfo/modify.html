@@ -1,0 +1,65 @@
+
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+             <div class="col-md-6"> <h3 class="box-title">修改专业信息</h3></div>
+             
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body">
+        <!-- 修改专业信息表单 -->
+       	 <!-- form start -->
+         <div class="box-body">
+        <!-- 修改学生信息表单 -->
+       	 <!-- form start -->
+            <form id="StudentModifyForm" role="form" action="student/modify" method="post">
+              <div class="box-body">
+                <label for="exampleInputPassword1">学号</label>
+                  <input type="text" class="form-control" name="studentid"  placeholder="学号">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">学生姓名</label>
+                  <input type="text" class="form-control" name="studentname"  placeholder="学生姓名">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">性别</label>
+                  <input type="text" class="form-control" name="sex"  placeholder="性别">
+                </div> 
+                <div class="form-group">
+                  <label for="exampleInputPassword1">学院名称</label>
+                  <input type="text" class="form-control" name="academy.academyname"  placeholder="学院名称">
+                </div> 
+                <div class="form-group">
+                  <label for="exampleInputPassword1">专业名称</label>
+                  <input type="text" class="form-control" name="majoy.majoyname"  placeholder="专业名称">
+                </div> 
+                <div class="form-group">
+                  <label for="exampleInputPassword1">学生手机号码</label>
+                  <input type="text" class="form-control" name="studentphone"  placeholder="学生手机号码">
+                </div> 
+                <div class="form-group">
+                  <label for="exampleInputPassword1">社团名称</label>
+                  <input type="text" class="form-control" name="association.associationname"  placeholder="社团名称">
+                </div> 
+                 
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <input type="submit" class="btn btn-primary" value="提交" />
+                <input type="button" class="btn btn-primary" value="取消" />
+              </div>
+            </form>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
