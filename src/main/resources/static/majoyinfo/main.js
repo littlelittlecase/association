@@ -1,5 +1,5 @@
 /**
- * 学院管理前端主管理JS
+ * 专业管理前端主管理JS
  * 模块：学校信息
  * 业务对象：学院管理
  * 
@@ -15,15 +15,15 @@ $(function(){
 	
 	//设置日期的格式和选择
 	
-	//显示学院列表
+	//显示专业列表
 	$("table#MajoyTable").jqGrid({
 		url: 'majoy/list/condition/page',
 		datatype: "json",
 		colModel: [
-			{ label: '司机姓名', name: 'majoyid', width: 20 },
-			{ label: '司机电话号码', name: 'majoyname', width: 50 },
-			{ label: '车牌号', name: 'academy.academyid', width: 50 },
-			{ label: '座位数学院名称', name: 'academy.academyname', width: 50 }
+			{ label: '专业编号', name: 'majoyid', width: 20 },
+			{ label: '专业名称', name: 'majoyname', width: 50 },
+			{ label: '学院编号', name: 'academy.academyid', width: 50 },
+			{ label: '学院名称', name: 'academy.academyname', width: 50 }
 			
 			
 		],
@@ -207,7 +207,7 @@ $(function(){
 				
 				
 
-				//取得指定的新闻信息
+				//取得指定的专业信息
 				$.getJSON("majoy/get",{majoyid:majoyID},function(majoy){
 					
 					if(majoy){
@@ -220,7 +220,7 @@ $(function(){
 				
 				});
 				
-				//修改新闻的弹窗
+				//修改专业的弹窗
 				$("div#MajoyDailogArea").dialog({
 					title:"修改专业",
 					width:600
@@ -279,7 +279,7 @@ $(function(){
 	        });
 		}
 		else {
-			BootstrapDialog.confirm('大哥真的确认删除此新闻吗?', function(result){
+			BootstrapDialog.confirm('确认删除该信息吗?', function(result){
 	            if(result) {
 		            $.post("majoy/delete",{majoyid:majoyID},function(result){
 		            	if(result.status=="OK"){

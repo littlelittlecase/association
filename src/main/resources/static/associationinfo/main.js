@@ -68,7 +68,7 @@ $(function(){
 		
 	}
 	
-	//定义学院名下拉框的更新事件的处理
+	//定义社团名下拉框的更新事件的处理
 	$("select#AssociationSelection").off().on("change",function(){
 		associationname=$("select#AssociationSelection").val();
 		
@@ -237,7 +237,7 @@ $(function(){
 					}
 				});
 				
-				//修改新闻的弹窗
+				//修改社团的弹窗
 				$("div#AssociationDailogArea").dialog({
 					title:"修改社团",
 					width:600
@@ -246,7 +246,7 @@ $(function(){
 				//拦截修改提交表单
 				$("form#AssociationModifyForm").ajaxForm(function(result){
 					if(result.status=="OK"){
-						reloadAssociationList(); //更新学院列表
+						reloadAssociationList(); //更新社团列表
 					}
 					
 					BootstrapDialog.show({
@@ -279,7 +279,7 @@ $(function(){
 	
 	
 	
-	//===============================删除新闻处理=====================================
+	//===============================删除社团处理=====================================
 
 			$("a#AssociationDeleteLink").off().on("click",function(){
 		
@@ -296,7 +296,7 @@ $(function(){
 	        });
 		}
 		else {
-			BootstrapDialog.confirm('大哥真的确认删除此社团吗?', function(result){
+			BootstrapDialog.confirm('真的确认删除此社团吗?', function(result){
 	            if(result) {
 		            $.post("association/delete",{associationid:associationID},function(result){
 		            	if(result.status=="OK"){

@@ -264,7 +264,7 @@ $(function(){
 	        });
 		}
 		else {
-			BootstrapDialog.confirm('大哥真的确认删除此新闻吗?', function(result){
+			BootstrapDialog.confirm('确认删除此信息吗?', function(result){
 	            if(result) {
 		            $.post("academy/delete",{academyid:academyID},function(result){
 		            	if(result.status=="OK"){

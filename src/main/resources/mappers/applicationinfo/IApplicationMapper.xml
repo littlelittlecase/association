@@ -19,7 +19,7 @@
   </resultMap>  
   <!--外键  -->
   <resultMap id="ApplicationResultMapWithRelation" type="ApplicationModel" extends="ApplicationResultMap">
-	   <association property="student" resultMap="com.neusoft.managerment.studentinfo.mapper.IStudentMapper.StudentResultMap"></association>
+	   <association property="student" resultMap="com.neusoft.managerment.student.mapper.IStudentMapper.StudentResultMap"></association>
   </resultMap>
    
   
@@ -74,8 +74,6 @@
      <if test="appname!=null and appname!=''">
      and app_name=#{appname}
      </if>
-      
-     
   </where>
   </select>
 

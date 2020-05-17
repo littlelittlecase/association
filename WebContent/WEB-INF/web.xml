@@ -1,0 +1,10 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance http://www.springmodules.org/schema/cache/springmodules-cache.xsd http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd http://java.sun.com/xml/ns/j2ee   
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd ">
+	<modelVersion>4.0.0</modelVersion>
+ <welcome-file-list>    
+      <welcome-file>index2.html</welcome-file>    
+        
+   </welcome-file-list>  
+</project> -->

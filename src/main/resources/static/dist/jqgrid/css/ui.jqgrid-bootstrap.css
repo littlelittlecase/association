@@ -21,9 +21,9 @@
 	padding: 4px 8px; 
 	position: relative; 
 	margin-right: 2px;
-	border-bottom: 1px solid #ddd; /*default*/
+	border-bottom: 2px solid #5a93a0; /*default*/
 
-}
+} /*表格标题  */
 .ui-jqgrid .ui-jqgrid-caption {
 	text-align: left;
 }
@@ -172,8 +172,10 @@ div.tablediv > .table-bordered {
 	margin: 0; 
 	padding:0; 
 	overflow: auto; 
-	text-align:left; 
-}
+	text-align:center; 
+	color:#5a93a0;
+	
+}/*下方表格  */
 .ui-jqgrid .ui-jqgrid-btable {
 	table-layout: fixed; 
 	border-left:none ; 
@@ -892,6 +894,8 @@ ul.ui-search-menu li, ul.ui-nav-menu li {
 .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
 	height:17px;
 	margin-top:5px;
+	text-align: center;
+	color: #346086;
 }
 .column-menu, .ui-search-menu {
 	padding: 10px 15px;

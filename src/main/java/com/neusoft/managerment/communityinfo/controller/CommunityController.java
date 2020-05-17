@@ -20,9 +20,9 @@ import com.neusoft.managerment.office.model.NewsModel;
 public class CommunityController {
 	@Autowired
 	ICommunityService communityservice = null;
-	//查询所有新闻
+	//查询所有社团活动
 	
-	//增加新闻
+	//增加社团活动
 	@RequestMapping(value="/add")
 	public ResultMessage<CommunityActiveModel> add(CommunityActiveModel com) throws Exception{
 		

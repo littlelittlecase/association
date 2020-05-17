@@ -16,7 +16,7 @@ $(function(){
 	$("span#mainpagetille").html("新闻管理");
 	//设置日期的格式和选择
 	
-	//显示新闻员工列表
+	//显示新闻列表
 	$("table#NewsTable").jqGrid({
 		url: 'news/list/condition/page',
 		datatype: "json",
@@ -277,7 +277,7 @@ $(function(){
 	        });
 		}
 		else {
-			BootstrapDialog.confirm('大哥真的确认删除此新闻吗?', function(result){
+			BootstrapDialog.confirm('确认删除此新闻吗?', function(result){
 	            if(result) {
 		            $.post("news/delete",{newsno:officenewsId},function(result){
 		            	if(result.status=="OK"){

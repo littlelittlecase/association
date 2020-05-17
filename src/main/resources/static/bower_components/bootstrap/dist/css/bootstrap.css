@@ -2258,8 +2258,8 @@ caption {
   text-align: left;
 }
 th {
-  text-align: left;
-}
+  text-align: center;
+}/*表格标题样式  */
 .table {
   width: 100%;
   max-width: 100%;

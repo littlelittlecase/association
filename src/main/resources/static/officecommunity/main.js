@@ -15,10 +15,10 @@ $(function(){
 	var activecontent = null;
 	
 	//设置系统页面标题
-	$("span#mainpagetille").html("社区活动管理");
+	$("span#mainpagetille").html("社团活动管理");
 	//设置日期的格式和选择
 	
-	//显示员工列表
+	//显示社团列表
 	$("table#CommunityTable").jqGrid({
 		url: 'community/list/condition/page',
 		datatype: "json",
@@ -30,7 +30,7 @@ $(function(){
 			{ label: '社团名称', name: 'activetype', width: 50},
 			
 		],
-		caption:"社区活动列表",
+		caption:"社团活动列表",
 		viewrecords: true, 
 		autowidth: true,
 		height: 400,
@@ -95,7 +95,7 @@ $(function(){
 		
 		reloadCommunityList();
 	});
-	//定义社区活动时间的更新事件的处理
+	//定义社团活动时间的更新事件的处理
 	
 	$("input#startActiveDate").off().on("change",function(){
 		startActiveDate=$("input#startActiveDate").val();
@@ -242,7 +242,7 @@ $(function(){
 				});
 				
 				
-				//取得指定的新闻信息
+				//取得指定的社团活动信息
 				$.getJSON("community/get",{activeno:officecommunityId},function(community){
 					
 					if(community){
@@ -255,7 +255,7 @@ $(function(){
 					}
 				});
 				
-				//修改新闻的弹窗
+				//修改社团活动的弹窗
 				$("div#CommunityDailogArea").dialog({
 					title:"修改活动",
 					width:600
