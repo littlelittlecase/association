@@ -9,7 +9,7 @@
     version: 1.0
     专业的MAPPER.XML
   --> 
-<mapper namespace="com.neusoft.managerment.schoolinfo.mapper.IMajoyMapper">
+<mapper namespace="com.xiaozhang.managerment.schoolinfo.mapper.IMajoyMapper">
  <cache/>
   <resultMap id="MajoyResultMap" type="MajoyModel">
      <id property="majoyid" column="majoy_id"/>
@@ -17,11 +17,9 @@
   </resultMap>
   <!--外键  -->
   <resultMap id="MajoyResultMapWithRelation" type="MajoyModel" extends="MajoyResultMap">
-	   <association property="academy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
+	   <association property="academy" resultMap="com.xiaozhang.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
   </resultMap>
    
-  
-  
   <!--增加  -->
   <insert id="create"  parameterType="MajoyModel" flushCache="true">
    insert into majoy (academy_id,majoy_id,majoy_name)

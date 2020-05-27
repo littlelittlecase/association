@@ -5,7 +5,7 @@
       <div class="box">
         <div class="box-header">
           <div class="row">
-             <div class="col-md-6"> <h3 class="box-title">增加社团信息</h3></div>
+             <div class="col-md-6"> <h3 class="box-title">提价申请</h3></div>
              
           </div>
          
@@ -14,29 +14,21 @@
       <div class="box-body">
         <!-- 增加社团信息表单 -->
        	 <!-- form start -->
-            <form id="AssociationAddForm" role="form" action="association/add" method="post">
+            <form id="ApplicationAddForm" role="form" action="application/add" method="post">
               <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputPassword1">社团编号</label>
-                  <input type="text" class="form-control" name="associationid"  placeholder="社团编号">
-                </div>
+                
                 <div class="form-group">
                   <label for="exampleInputPassword1">社团名称</label>
-                  <input type="text" class="form-control" name="associationname"  placeholder="社团名称">
+                  <input type="text" class="form-control" name="appname"  placeholder="社团名称">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">社团负责人</label>
-                  <input type="text" class="form-control" name="associationleader"  placeholder="社团负责人">
+                  <label for="exampleInputPassword1">申请理由</label>
+                  <input type="text" class="form-control" name="reason"  placeholder="申请理由">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">创建时间</label>
-                  <input type="date" class="form-control" name="associationtime"  placeholder="创建时间">
+                  <label for="exampleInputPassword1">学生姓名</label>
+                  <input type="text" class="form-control" name="student.studentname"  placeholder="学生姓名">
                 </div>
-                <div class="form-group">
-					   <label  for="name">社团状态:</label>
-					     <input type="radio" name="associationstatus" value="Y">正常
-					     <input type="radio" name="associationstatus" value="N">停用
-					 </div>
                
               </div>
               <!-- /.box-body -->

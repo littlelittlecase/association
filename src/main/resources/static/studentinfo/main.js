@@ -8,14 +8,15 @@ $(function(){
 	var studentID = null;
 	var studentname = null;
 	var sex = null;
-	var Studentname = null;
+	var studentname = null;
 	var majoyname = null;
 	var studentphone = null;
 	var associationname = null;
+	var academyname = null;
 	
 	
 	//设置系统页面标题
-	$("span#mainpagetille").html("学院管理");
+	$("span#mainpagetille").html("学生管理");
 	//设置日期的格式和选择
 	
 	//显示学生列表
@@ -57,10 +58,18 @@ $(function(){
 	$.getJSON("student/list/name",function(StudentList){
 		if(StudentList){
 			$.each(StudentList,function(index,nm){
-				$("select#StudentSelection").append("<option value='"+nm.studentname+"'>"+nm.studentname+"</option>");
+				$("select#AcademySelection").append("<option value='"+nm.academy.academyname+"'>"+nm.academy.academyname+"</option>");
 			});
 		}
 	});
+	
+	/*$.getJSON("student/list/name",function(StudentList){
+		if(StudentList){
+			$.each(StudentList,function(index,nm){
+				$("select#StudentSelection").append("<option value='"+nm.studentname+"'>"+nm.studentname+"</option>");
+			});
+		}
+	});*/
 	
 	//设置检索参数，更新jQGrid的列表显示
 	function reloadStudentList()
@@ -83,7 +92,7 @@ $(function(){
 
 	
 	
-	//===========================增加学院处理================================================
+	//===========================增加处理================================================
 	
 	$("a#StudentAddLink").off().on("click",function(){
 		$("div#StudentDailogArea").load("studentinfo/add.html",function(){
@@ -142,7 +151,7 @@ $(function(){
 			
 			//增加学院的弹窗
 			$("div#StudentDailogArea").dialog({
-				title:"增加学院",
+				title:"增加学生",
 				width:600
 			});
 			console.log("89");

@@ -9,7 +9,7 @@
     version: 1.0
     专业的MAPPER.XML
   --> 
-<mapper namespace="com.neusoft.managerment.associationinfo.mapper.IAssociationMapper">
+<mapper namespace="com.xiaozhang.managerment.associationinfo.mapper.IAssociationMapper">
  <cache/>
   <resultMap id="AssociationResultMap" type="AssociationModel">
      <id property="associationid" column="association_id"/>

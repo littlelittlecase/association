@@ -8,7 +8,7 @@
     version: 1.0
     社团官方新闻的MAPPER.XML
   -->
-<mapper namespace="com.neusoft.managerment.office.mapper.INewsMapper">
+<mapper namespace="com.xiaozhang.managerment.office.mapper.INewsMapper">
  <cache/>
   <resultMap id="NewsResultMap" type="NewsModel">
      <id property="newsno" column="NEWSNO"/>

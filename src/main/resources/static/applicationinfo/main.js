@@ -1,9 +1,6 @@
-/**
- * 社团管理前端主管理JS
- 
- */
+
 $(function(){
-	var applicationID = null;
+	var applicationID = 0;
 	var appname = null;
 	var studentname = null;
 	var reason = null;
@@ -30,7 +27,7 @@ $(function(){
 		viewrecords: true, 
 		autowidth: true,
 		height: 400,
-		rowNum: 5,
+		rowNum: 10,
 		rowList:[10,20,30],
 		jsonReader : { 
 		      root: "list", 
@@ -86,11 +83,102 @@ $(function(){
 		reloadApplicationList();
 	});
 	
-	
 
-	
-	
-	
+	//===========================增加处理================================================
+	$("a#ApplicationAddLink").off().on("click",function(){
+		$("div#ApplicationDailogArea").load("applicationinfo/add.html",function(){
+			//验证提交数据
+			/*$("form#StudentAddForm").validate({
+				rules: {
+					studentid: {
+						required: true
+					},
+					studentname: {
+						required: true
+					},
+					sex: {
+						required: true
+					},
+					academyname: {
+						required: true
+					},
+					majoyname: {
+						required: true
+					},
+					studentphone: {
+						required: true
+					},
+					associationname: {
+						required: true
+					}
+					
+					
+				},
+				message:{
+					studentid: {
+						required: "学号不能为空"
+					},
+					studentname: {
+						required: "学生姓名不能为空"
+					},
+					sex: {
+						required: "性别不能为空"
+					},
+					academyname: {
+						required: "学院不能为空"
+					},
+					majoyname: {
+						required: "专业不能为空"
+					},
+					studentphone: {
+						required: "手机号码不能为空"
+					},
+					associationname: {
+						required: "社团不能为空"
+					}
+					
+				}
+			});*/
+			
+			//增加学院的弹窗
+			$("div#ApplicationDailogArea").dialog({
+				title:"提交申请",
+				width:600
+			});
+			
+			
+			//拦截增加提交表单
+			$("form#ApplicationAddForm").ajaxForm(function(result){
+				if(result.status=="OK"){
+					reloadApplicationList(); //更新学院列表
+					console.log("89");
+				}
+				
+				BootstrapDialog.show({
+		            title: '学生操作信息',
+		            message:result.message,
+		            buttons: [{
+		                label: '确定',
+		                action: function(dialog) {
+		                    dialog.close();
+		                }
+		            }]
+		        });
+				$("div#ApplicationDailogArea").dialog( "close" );
+				$("div#ApplicationDailogArea").dialog( "destroy" );
+				$("div#ApplicationDailogArea").html("");
+				
+			});
+			
+			//点击取消按钮处理
+			$("input[value='取消']").on("click",function(){
+				$("div#ApplicationDailogArea").dialog( "close" );
+				$("div#ApplicationDailogArea").dialog( "destroy" );
+				$("div#ApplicationDailogArea").html("");
+			});
+		});
+	});
+
 	//===============================审核处理=============================
 
 		$("a#ApplicationModifyLink").off().on("click",function(){

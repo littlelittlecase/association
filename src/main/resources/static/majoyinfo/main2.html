@@ -1,0 +1,44 @@
+<script type="text/javascript" src="majoyinfo/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+            <div class="col-md-9">
+	             <form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label  for="name">专业名称</label>
+ 				   
+				    <select id="MajoySelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+				   <a href="#" class="btn btn-default" id="MajoySearchButton">检索</a>
+				  </div>
+				</form>
+             </div>
+             <div class="col-md-6"><h3 class="box-title">专业信息管理</h3></div>
+            
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="majoycontent">
+       <table id="MajoyTable" class="table table-bordered table-hover"></table>
+    <div class="row" id="Majoypager" ></div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!--  <a href="#" id="MajoyAddLink" class="btn btn-info">增加</a> -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<!--弹出窗口  -->
+<div id="MajoyDailogArea">
+
+</div>

@@ -9,7 +9,7 @@
     version: 1.0
     社团审核的MAPPER.XML
   --> 
-<mapper namespace="com.neusoft.managerment.associationinfo.mapper.IApplicationMapper">
+<mapper namespace="com.xiaozhang.managerment.associationinfo.mapper.IApplicationMapper">
  <cache/>
   <resultMap id="ApplicationResultMap" type="ApplicationModel">
      <id property="appid" column="app_id"/>
@@ -19,10 +19,13 @@
   </resultMap>  
   <!--外键  -->
   <resultMap id="ApplicationResultMapWithRelation" type="ApplicationModel" extends="ApplicationResultMap">
-	   <association property="student" resultMap="com.neusoft.managerment.student.mapper.IStudentMapper.StudentResultMap"></association>
+	   <association property="student" resultMap="com.xiaozhang.managerment.student.mapper.IStudentMapper.StudentResultMap"></association>
   </resultMap>
    
-  
+  <insert id="create"  parameterType="ApplicationModel" flushCache="true">
+   insert into application (app_status,app_name,reason,student_name)
+   values (#{appstatus},#{appname},#{reason},#{student.studentname})
+  </insert>
   <!--修改  -->
   <update id="update" flushCache="true">
    update application set app_status=#{appstatus},app_name=#{appname},reason=#{reason},student_name=#{student.studentname} where app_id=#{appid}

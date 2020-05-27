@@ -9,7 +9,7 @@
     version: 1.0
     专业的MAPPER.XML
   --> 
-<mapper namespace="com.neusoft.managerment.student.mapper.IStudentMapper">
+<mapper namespace="com.xiaozhang.managerment.student.mapper.IStudentMapper">
  <cache/>
   <resultMap id="StudentResultMap" type="StudentModel">
      <id property="studentid" column="student_id"/>
@@ -20,9 +20,9 @@
   </resultMap>
   <!--外键  -->
   <resultMap id="StudentResultMapWithRelation" type="StudentModel" extends="StudentResultMap">
-	   <association property="academy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
-	   <association property="majoy" resultMap="com.neusoft.managerment.schoolinfo.mapper.IMajoyMapper.MajoyResultMap"></association>
-  	   <association property="association" resultMap="com.neusoft.managerment.associationinfo.mapper.IAssociationMapper.AssociationResultMap"></association>
+	   <association property="academy" resultMap="com.xiaozhang.managerment.schoolinfo.mapper.IAcademyMapper.AcademyResultMap"></association>
+	   <association property="majoy" resultMap="com.xiaozhang.managerment.schoolinfo.mapper.IMajoyMapper.MajoyResultMap"></association>
+  	   <association property="association" resultMap="com.xiaozhang.managerment.associationinfo.mapper.IAssociationMapper.AssociationResultMap"></association>
   </resultMap>
    
   

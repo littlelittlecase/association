@@ -9,7 +9,7 @@
     version: 1.0
     学院的MAPPER.XML
   --> 
-<mapper namespace="com.neusoft.managerment.schoolinfo.mapper.IAcademyMapper">
+<mapper namespace="com.xiangzhang.managerment.schoolinfo.mapper.IAcademyMapper">
  <cache/>
   <resultMap id="AcademyResultMap" type="AcademyModel">
      <id property="academyid" column="academy_id"/>

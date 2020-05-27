@@ -1,0 +1,58 @@
+<script type="text/javascript" src="officecommunity/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+             <div class="col-md-6"><h3 class="box-title">社团活动管理</h3></div>
+             <div class="col-md-9">
+	             <form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label  for="name">社团名称</label>
+				    <select id="TypeSelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+				    <label  for="name">活动地点</label>
+				    <select id="PlaceSelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+					    <label  for="name">社团活动日期</label>
+					    从<input type="date" class="form-control" id="startActiveDate" size="10" />
+					    至<input type="date" class="form-control" id="endActiveDate" size="10" />
+				  </div>
+				  <div class="form-group">
+				   <a href="#" class="btn btn-default" id="CommunitySearchButton">检索</a>
+				  </div>
+				</form>
+             </div>
+             <!-- <div class="col-md-6 text-right" >
+             	<a href="#" id="CommunityModifyLink" class="btn btn-info">修改</a> 
+            	<a href="#" id="CommunityDeleteLink" class="btn btn-info">删除</a>
+             	<a href="#" class="btn btn-info">详细</a>
+              </div> -->
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="communitycontent">
+       <table id="CommunityTable" class="table table-bordered table-hover"></table>
+        <div class="row" id="CommunityGridPager"></div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+     <!-- <a href="#" id="CommunityAddLink" class="btn btn-info">增加</a> -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<!--弹出窗口  -->
+<div id="CommunityDailogArea">
+
+</div>

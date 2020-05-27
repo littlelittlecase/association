@@ -8,7 +8,7 @@
     version: 1.0
     系统基础信息的社区活动的MAPPER.XML
   -->
-<mapper namespace="com.neusoft.managerment.communityinfo.mapper.ICommunityMapper">
+<mapper namespace="com.xiaozhang.managerment.communityinfo.mapper.ICommunityMapper">
   
   <cache/>
   <resultMap id="ActResultMap" type="Active">

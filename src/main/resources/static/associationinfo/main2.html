@@ -1,0 +1,43 @@
+<script type="text/javascript" src="associationinfo/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+            <div class="col-md-9">
+	             <form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label  for="name">社团名称</label>
+				    <select id="AssociationSelection" class="form-control">
+				       <option value="">所有</option>
+				    </select>
+				  </div>
+				  <div class="form-group">
+				   <a href="#" class="btn btn-default" id="AssociationSearchButton">检索</a>
+				  </div>
+				</form>
+             </div>
+             <div class="col-md-6"><h3 class="box-title">社团管理</h3></div>
+            
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="associationcontent">
+       <table id="AssociationTable" class="table table-bordered table-hover"></table>
+    <div class="row" id="Associationpager" ></div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!--  <a href="#" id="AssociationAddLink" class="btn btn-info">增加</a> -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<!--弹出窗口  -->
+<div id="AssociationDailogArea">
+
+</div>
